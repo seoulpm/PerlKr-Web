@@ -3,7 +3,6 @@
 use utf8;
 
 use Mojolicious::Lite;
-use Plack::Builder;
 
 use Const::Fast;
 use Text::MultiMarkdown;
@@ -24,27 +23,11 @@ plugin 'PODRenderer';
 
 app->defaults(%DEFAULT_STASH);
 
-app->types->type('eot', 'application/vnd.bw-fontobject');
-app->types->type('ttf', 'application/x-font-ttf');
-
 get '/'           => 'index';
 get '/contribute' => 'contribute';
 get '/donate'     => 'donate';
 
-builder {
-    enable 'Expires',
-        content_type => [
-            'application/javascript',
-            'application/vnd.bw-fontobject',  # eot
-            'application/x-font-ttf',         # ttf
-            'application/x-woff',             # woff
-            'text/css',
-            qr{^image/},
-        ],
-        expires => 'access plus 1 months';
-
-    app->start;
-};
+app->start;
 
 __DATA__
 @@ index.html.ep
