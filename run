@@ -1,3 +1,3 @@
 #!/bin/sh
 
-plackup --server=Starman --workers=5 -R=perlkr-web.conf --daemonize perlkr-web.pl
+starman --port=5000 --workers=5 perlkr-web.pl
