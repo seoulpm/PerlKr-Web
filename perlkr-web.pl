@@ -4,7 +4,6 @@ use utf8;
 
 use Mojolicious::Lite;
 
-use Const::Fast;
 use Text::MultiMarkdown;
 
 my $m = Text::MultiMarkdown->new(
@@ -12,16 +11,9 @@ my $m = Text::MultiMarkdown->new(
     use_wikilinks => 0,
 );
 
-my $config = plugin 'Config';
-const my %DEFAULT_STASH => (
-    %$config,
+app->defaults( %{ plugin 'Config' => { default => {
     m => $m,
-);
-
-# Documentation browser under "/perldoc"
-plugin 'PODRenderer';
-
-app->defaults(%DEFAULT_STASH);
+}}});
 
 get '/'           => 'index';
 get '/contribute' => 'contribute';
